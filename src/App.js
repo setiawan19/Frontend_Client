@@ -26,6 +26,9 @@ import 'fullcalendar/dist/fullcalendar.css';
 import './layout/layout.css';
 import './App.css';
 import { ListMahasiswa } from './components/ListMahasiswa';
+import { AddMahasiswa } from './components/AddMahasiswa';
+import { EditMahasiswa } from './components/EditMahasiswa';
+import { ListFK_PR } from './components/ListFK_PR';
  
 class App extends Component {
 
@@ -104,7 +107,7 @@ class App extends Component {
                 items: [
                     {label: 'Admin User', icon: 'pi pi-fw pi-user' },
                     {label: 'Mahasiswa', icon: 'pi pi-fw pi-users', to:'/list_mahasiswa' },
-                    {label: 'Fakultas & Prodi', icon: 'pi pi-fw pi-file'}
+                    {label: 'Fakultas & Prodi', icon: 'pi pi-fw pi-file', to:'/jurusan'}
                 ]
             },
             {
@@ -112,74 +115,74 @@ class App extends Component {
             },
             {
                 label: 'About Aplication', icon: 'pi pi-fw pi-question',
-            }
-        //     {
-        //         label: 'Components', icon: 'pi pi-fw pi-globe', badge: '9',
-        //         items: [
-		// 			{label: 'Sample Page', icon: 'pi pi-fw pi-th-large', to: '/sample'},
-		// 			{label: 'Forms', icon: 'pi pi-fw pi-file', to: '/forms'},
-		// 			{label: 'Data', icon: 'pi pi-fw pi-table', to: '/data'},
-		// 			{label: 'Panels', icon: 'pi pi-fw pi-list', to: '/panels'},
-		// 			{label: 'Overlays', icon: 'pi pi-fw pi-clone', to: '/overlays'},
-		// 			{label: 'Menus', icon: 'pi pi-fw pi-plus', to: '/menus'},
-		// 			{label: 'Messages', icon: 'pi pi-fw pi-spinner',to: '/messages'},
-		// 			{label: 'Charts', icon: 'pi pi-fw pi-chart-bar', to: '/charts'},
-		// 			{label: 'Misc', icon: 'pi pi-fw pi-upload', to: '/misc'}
-        //         ]
-        //     },
-        //     {
-        //         label: 'Template Pages', icon: 'pi pi-fw pi-file',
-        //         items: [
-        //             {label: 'Empty Page', icon: 'pi pi-fw pi-circle-off', to: '/empty'}
-        //         ]
-        //     },
-        //     {
-        //         label: 'Menu Hierarchy', icon: 'pi pi-fw pi-search',
-        //         items: [
-        //             {
-        //                 label: 'Submenu 1', icon: 'pi pi-fw pi-bookmark',
-        //                 items: [
-        //                     {
-        //                         label: 'Submenu 1.1', icon: 'pi pi-fw pi-bookmark',
-        //                         items: [
-        //                             {label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-bookmark'},
-        //                             {label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-bookmark'},
-        //                             {label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-bookmark'},
-        //                         ]
-        //                     },
-        //                     {
-        //                         label: 'Submenu 1.2', icon: 'pi pi-fw pi-bookmark',
-        //                         items: [
-        //                             {label: 'Submenu 1.2.1', icon: 'pi pi-fw pi-bookmark'},
-        //                             {label: 'Submenu 1.2.2', icon: 'pi pi-fw pi-bookmark'}
-        //                         ]
-        //                     },
-        //                 ]
-        //             },
-        //             {
-        //                 label: 'Submenu 2', icon: 'pi pi-fw pi-bookmark',
-        //                 items: [
-        //                     {
-        //                         label: 'Submenu 2.1', icon: 'pi pi-fw pi-bookmark',
-        //                         items: [
-        //                             {label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-bookmark'},
-        //                             {label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-bookmark'},
-        //                             {label: 'Submenu 2.1.3', icon: 'pi pi-fw pi-bookmark'},
-        //                         ]
-        //                     },
-        //                     {
-        //                         label: 'Submenu 2.2', icon: 'pi pi-fw pi-bookmark',
-        //                         items: [
-        //                             {label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-bookmark'},
-        //                             {label: 'Submenu 2.2.2', icon: 'pi pi-fw pi-bookmark'}
-        //                         ]
-        //                     }
-        //                 ]
-        //             }
-        //         ]
-        //     },
-        //     {label: 'Documentation', icon: 'pi pi-fw pi-question', command: () => {window.location = "#/documentation"}},
-        //     {label: 'View Source', icon: 'pi pi-fw pi-search', command: () => {window.location = "https://github.com/primefaces/sigma"}}
+            },
+            {
+                label: 'Components', icon: 'pi pi-fw pi-globe', badge: '9',
+                items: [
+					{label: 'Sample Page', icon: 'pi pi-fw pi-th-large', to: '/sample'},
+					{label: 'Forms', icon: 'pi pi-fw pi-file', to: '/forms'},
+					{label: 'Data', icon: 'pi pi-fw pi-table', to: '/data'},
+					{label: 'Panels', icon: 'pi pi-fw pi-list', to: '/panels'},
+					{label: 'Overlays', icon: 'pi pi-fw pi-clone', to: '/overlays'},
+					{label: 'Menus', icon: 'pi pi-fw pi-plus', to: '/menus'},
+					{label: 'Messages', icon: 'pi pi-fw pi-spinner',to: '/messages'},
+					{label: 'Charts', icon: 'pi pi-fw pi-chart-bar', to: '/charts'},
+					{label: 'Misc', icon: 'pi pi-fw pi-upload', to: '/misc'}
+                ]
+            },
+            {
+                label: 'Template Pages', icon: 'pi pi-fw pi-file',
+                items: [
+                    {label: 'Empty Page', icon: 'pi pi-fw pi-circle-off', to: '/empty'}
+                ]
+            },
+            {
+                label: 'Menu Hierarchy', icon: 'pi pi-fw pi-search',
+                items: [
+                    {
+                        label: 'Submenu 1', icon: 'pi pi-fw pi-bookmark',
+                        items: [
+                            {
+                                label: 'Submenu 1.1', icon: 'pi pi-fw pi-bookmark',
+                                items: [
+                                    {label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-bookmark'},
+                                    {label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-bookmark'},
+                                    {label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-bookmark'},
+                                ]
+                            },
+                            {
+                                label: 'Submenu 1.2', icon: 'pi pi-fw pi-bookmark',
+                                items: [
+                                    {label: 'Submenu 1.2.1', icon: 'pi pi-fw pi-bookmark'},
+                                    {label: 'Submenu 1.2.2', icon: 'pi pi-fw pi-bookmark'}
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        label: 'Submenu 2', icon: 'pi pi-fw pi-bookmark',
+                        items: [
+                            {
+                                label: 'Submenu 2.1', icon: 'pi pi-fw pi-bookmark',
+                                items: [
+                                    {label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-bookmark'},
+                                    {label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-bookmark'},
+                                    {label: 'Submenu 2.1.3', icon: 'pi pi-fw pi-bookmark'},
+                                ]
+                            },
+                            {
+                                label: 'Submenu 2.2', icon: 'pi pi-fw pi-bookmark',
+                                items: [
+                                    {label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-bookmark'},
+                                    {label: 'Submenu 2.2.2', icon: 'pi pi-fw pi-bookmark'}
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {label: 'Documentation', icon: 'pi pi-fw pi-question', command: () => {window.location = "#/documentation"}},
+            {label: 'View Source', icon: 'pi pi-fw pi-search', command: () => {window.location = "https://github.com/primefaces/sigma"}}
         ];
     }
 
@@ -252,6 +255,9 @@ class App extends Component {
                     <Route path="/empty" component={EmptyPage} />
                     <Route path="/documentation" component={Documentation} />
                     <Route path="/list_mahasiswa" component={ListMahasiswa} />
+                    <Route path="/AddMahasiswa" component={AddMahasiswa}/>
+                    <Route path="/EditMahasiswa" component={EditMahasiswa}/>
+                    <Route path="/Jurusan" component={ListFK_PR}/>
 
                 </div>
 
