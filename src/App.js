@@ -29,6 +29,7 @@ import { ListMahasiswa } from './components/ListMahasiswa';
 import { AddMahasiswa } from './components/AddMahasiswa';
 import { EditMahasiswa } from './components/EditMahasiswa';
 import { ListFK_PR } from './components/ListFK_PR';
+import { ListPrediksi } from './components/list_prediksi'
  
 class App extends Component {
 
@@ -111,7 +112,7 @@ class App extends Component {
                 ]
             },
             {
-                label: 'Prediksi Kelulusan', icon: 'pi pi-fw pi-chart-bar',
+                label: 'Prediksi Kelulusan', icon: 'pi pi-fw pi-chart-bar', to:'/ListPrediksi'
             },
             {
                 label: 'About Aplication', icon: 'pi pi-fw pi-question',
@@ -258,7 +259,7 @@ class App extends Component {
                     <Route path="/AddMahasiswa" component={AddMahasiswa}/>
                     <Route path="/EditMahasiswa" component={EditMahasiswa}/>
                     <Route path="/Jurusan" component={ListFK_PR}/>
-
+                    <Route path="/ListPrediksi" component={ListPrediksi}/>
                 </div>
 
                 <AppFooter />
