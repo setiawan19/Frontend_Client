@@ -22,8 +22,21 @@ export class AddMahasiswa extends Component{
             radioValue: null,
             dropdownProdi: null,
             dropdownFakultas: null,
-            ratingValue: null
+            ratingValue: null,
+            dataProdi: [],
+            dataFakultas: [],
+            nim: '', nama : '', jenis_kelamin : '', tempat_lahir : '', tanggal_lahir : '',
+            asal_sekolah : '', nilai_UN : '', tahun_lulus : '', tahun_masuk_kuliah : '',
+            no_hp : '', email : '', pekerjaan_orangtua : '', jurusan_sekolah: '', id_prodi : ''
         }
+    }
+    componentDidMount() {
+        axios.get('http://localhost:3210/prodifk')
+        .then((getdata)=>{
+            this.setState({
+                dataProdi: getdata.data
+            })
+        })
     }
     saveData(e){
         e.preventDefault();
@@ -37,12 +50,12 @@ export class AddMahasiswa extends Component{
             asal_sekolah: this.asal_sekolah.value,
             nilai_UN: this.nilai_UN.value,
             tahun_lulus: this.tahun_lulus.value,
-            tahun_masuk_sekolah: this.tahun_masuk_sekolah.value,
+            tahun_masuk_kuliah: this.tahun_masuk_kuliah.value,
             no_hp: this.no_hp.value,
             email: this.email.value,
             pekerjaan_orangtua: this.pekerjaan_orangtua.value,
-            jurusan_sekolah: this.jurusan_sekolah.value,
-            id_prodi: this.id_prodi.value
+            jurusan_sekolah: this.jurusan_sekolah,
+            id_prodi: 1
         })
         .then(function (response) {
           console.log(response);
@@ -50,13 +63,41 @@ export class AddMahasiswa extends Component{
         .catch(function (error) {
           console.log(error);
         });
-        this.nim.value = ''; this.nama.value = ''; this.jenis_kelamin.value = '';
-        this.tempat_lahir.value = ''; this.tanggal_lahir.value = ''; this.asal_sekolah.value = '';
-        this.nilai_UN.value=''; this.tahun_lulus.value = ''; this.tahun_masuk_sekolah.value =''; 
-        this.no_hp.value=''; this.email.value = ''; this.pekerjaan_orangtua.value=''; 
-        this.jurusan_sekolah.value=''; this.id_prodi.value='';
+        // this.nim.value = ''; this.nama.value = ''; this.jenis_kelamin.value = '';
+        // this.tempat_lahir.value = ''; this.tanggal_lahir.value = ''; this.asal_sekolah.value = '';
+        // this.nilai_UN.value=''; this.tahun_lulus.value = ''; this.tahun_masuk_kuliah.value =''; 
+        // this.no_hp.value=''; this.email.value = ''; this.pekerjaan_orangtua.value=''; 
+        // this.jurusan_sekolah.value=''; this.id_prodi.value='';
     }
     
+    kirimData = (e) => {
+        e.preventDefault()
+        let formproduk = new FormData();
+        formproduk.append('nim', this.state.nim);
+        formproduk.append('nama', this.state.nama);
+        formproduk.append('jenis_kelamin', this.state.jenis_kelamin);
+        formproduk.append('tempat_lahir', this.state.tempat_lahir);
+        formproduk.append('tanggal_lahir', this.state.tanggal_lahir);
+        formproduk.append('asal_sekolah', this.state.asal_sekolah);
+        formproduk.append('nilai_UN', this.state.nilai_UN);
+        formproduk.append('tahun_masuk_sekolah', this.state.tahun_masuk_kuliah);
+        formproduk.append('no_hp', this.state.no_hp);
+        formproduk.append('email', this.state.email);
+        formproduk.append('pekerjaan_orangtua', this.state.pekerjaan_orangtua);
+        formproduk.append('jurusan_sekolah', this.state.jurusan_sekolah);
+        // formproduk.append('id_prodi', this.state.id_prodi);
+  
+        axios.post('http://localhost:3210/mahasiswa', formproduk)
+        window.location.href = "/list_mahasiswa";
+    }
+    
+    test(){
+        console.log(this.state.nim)
+        console.log(this.state.nama)
+        console.log(this.dataProdi.prodi)
+    }
+
+
     render(){
         return(
             <div className="p-grid p-fluid">
@@ -65,30 +106,37 @@ export class AddMahasiswa extends Component{
                 </div>
                 <div className="p-col-6">
                     <div className="card card-w-title">
-                        <h4>Personal</h4>
+                       <h4>Personal</h4>
                         <div className="p-grid">
-                            <div className="p-col-12 p-md-6">
-                                <InputText placeholder="NIM" type="number" ref={ in_nim => this.nim = in_nim }/>
+                            <div className="p-col-12 p-md-12 form-group">
+                                <InputText className="form-control" placeholder="NIM" type="number" value={this.state.nim} 
+                                onChange={e => this.setState({nim: e.target.value })}/>
                             </div>
-                            <div className="p-col-12 p-md-6">
-                                <InputText placeholder="Nama" type="text" ref={ in_nama => this.nama = in_nama }/>
+                            <div className="p-col-12 p-md-12 form-group">
+                                <InputText className="form-control" placeholder="Nama" type="text" value={this.state.nama}
+                                onChange={e => this.setState({nama: e.target.value })}/>
                             </div>
-                            <div className="p-col-12 p-md-6">
-                                <InputText placeholder="Tempat Lahir" type="text" ref={ in_tmpt => this.tempat_lahir = in_tmpt }/>
+                            <div className="p-col-12 p-md-12 form-group">
+                                <InputText className="form-control" placeholder="Tempat Lahir" type="text" 
+                                    value={this.state.tempat_lahir}
+                                    onChange={e => this.setState({tempat_lahir: e.target.value })}/>
                             </div>
-                            <div className="p-col-12 p-md-6" >
-                                <Calendar placeholder="Tanggal Lahir" dateFormat="yy/mm/dd" ref={ in_date => this.tanggal_lahir = in_date } value={this.state.date1} onChange={(e) => this.setState({date1: e.value})}/>
+                            <div className="p-col-12 p-md-12 form-group" >
+                                <Calendar className="form-control" placeholder="Tanggal Lahir" dateFormat="yy/mm/dd" 
+                                    value={this.state.tanggal_lahir}
+                                    onChange={e => this.setState({tanggal_lahir: e.target.value })}/>
                             </div>
                             
-                            <div className="p-col-12 p-md-6">
-                                <InputText placeholder="Pekerjaan Orangtua" ref={ in_krj => this.pekerjaan_orangtua = in_krj }/>
+                            <div className="p-col-12 p-md-12 form-group">
+                                <InputText className="form-control" placeholder="Pekerjaan Orangtua" value={this.state.pekerjaan_orangtua}
+                                onChange={e => this.setState({pekerjaan_orangtua: e.target.value })}/>
                             </div>
                             <div className="p-col-12 p-md-12">
                                 <label>Jenis Kelamin </label>
-                                <div className="p-col-12 p-md-6">
-                                    <RadioButton value="Laki-Laki" inputId="rb1" ref={ in_laki => this.jenis_kelamin = in_laki } onChange={event => this.setState({radioValue: event.value})} checked={this.state.radioValue === "Laki-Laki"}/>
+                                <div className="p-col-12 p-md-12 form-group">
+                                    <RadioButton className="form-control" value="Laki-Laki" inputId="rb1" onChange={event => this.setState({jenis_kelamin: event.value})} checked={this.state.jenis_kelamin === "Laki-Laki"}/>
                                     <label htmlFor="rb1" className="p-radiobutton-label">Laki-Laki</label> &nbsp; &nbsp;
-                                    <RadioButton value="Perempuan" inputId="rb2" ref={ in_cw => this.jenis_kelamin = in_cw } onChange={event => this.setState({radioValue: event.value})} checked={this.state.radioValue === "Perempuan"}/>
+                                    <RadioButton className="form-control" value="Perempuan" inputId="rb2" onChange={event => this.setState({jenis_kelamin: event.value})} checked={this.state.jenis_kelamin === "Perempuan"}/>
                                     <label htmlFor="rb2" className="p-radiobutton-label">Perempuan</label>
                                 </div>
                             </div>
@@ -99,11 +147,13 @@ export class AddMahasiswa extends Component{
                 <div className="p-col-6">
                     <div className="card card-w-title">
                         <h4>Contact</h4>
-                        <div className="p-col-12 p-md-6">
-                            <InputText placeholder="Handphone" type="number" ref={ in_hp => this.no_hp = in_hp }/>
+                        <div className="p-col-12 p-md-12 form-group">
+                            <InputText className="form-control" placeholder="Handphone" type="number" value={this.state.no_hp}
+                                onChange={e => this.setState({no_hp: e.target.value })}/>
                         </div>
-                        <div className="p-col-12 p-md-6">
-                            <InputText placeholder="Email" type="email" ref={ in_email => this.email = in_email }/>
+                        <div className="p-col-12 p-md-12 form-group">
+                            <InputText className="form-control" placeholder="Email" type="email" value={this.state.no_hp}
+                                onChange={e => this.setState({no_hp: e.target.value })}/>
                         </div>
                     </div>
                 </div>
@@ -111,33 +161,36 @@ export class AddMahasiswa extends Component{
                     <div className="card card-w-title">
                         <h4>Pendidikan</h4>
                         <div className="p-grid">
-                            <div className="p-col-12 p-md-6">
-                                <InputText placeholder="Asal Sekolah" ref={ in_sklh => this.asal_sekolah = in_sklh }/>
+                            <div className="p-col-12 p-md-12 form-group">
+                                <InputText className="form-control" placeholder="Asal Sekolah" value={this.state.asal_sekolah}
+                                onChange={e => this.setState({asal_sekolah: e.target.value })}/>
                             </div>
-                            <div className="p-col-12 p-md-6">
-                                <InputText placeholder="Jurusan SMA" ref={ in_jrsn => this.jurusan_sekolah = in_jrsn }/>
+                            <div className="p-col-12 p-md-12 form-group">
+                                <InputText className="form-control" placeholder="Jurusan SMA" value={this.state.jurusan_sekolah}
+                                onChange={e => this.setState({jurusan_sekolah: e.target.value })}/>
                             </div>
-                            <div className="p-col-12 p-md-6">
-                                <InputText placeholder="Nilai UN" type="number" ref={ in_nilai => this.nilai_UN = in_nilai }/>
+                            <div className="p-col-12 p-md-12 form-group">
+                                <InputText className="form-control" placeholder="Nilai UN" type="number" value={this.state.nilai_UN}
+                                onChange={e => this.setState({nilai_UN: e.target.value })}/>
                             </div>
-                            <div className="p-col-12 p-md-6">
-                                <InputText placeholder="Tahun Lulus SMA" type="number" ref={ in_smalulus => this.tahun_lulus = in_smalulus }/>
+                            <div className="p-col-12 p-md-12 form-group">
+                                <InputText className="form-control" placeholder="Tahun Lulus SMA" type="number" value={this.state.tahun_lulus}
+                                onChange={e => this.setState({tahun_lulus: e.target.value })}/>
                             </div>
-                            <div className="p-col-12 p-md-6">
-                                <InputText placeholder="Tahun Masuk Kuliah" type="number" ref={ in_msk => this.tahun_masuk_sekolah = in_msk }/>
+                            <div className="p-col-12 p-md-12 form-group">
+                                <InputText className="form-control" placeholder="Tahun Masuk Kuliah" type="number" value={this.state.tahun_masuk_kuliah}
+                                onChange={e => this.setState({tahun_masuk_kuliah: e.target.value })}/>
                             </div>   
-                            <div className="p-col-12 p-md-6">
-                                <Dropdown placeholder="Prodi" value="2" ref={ in_msk => this.id_prodi = in_msk }/>
+                            <div className="p-col-12 p-md-12 form-group">
+                                <Dropdown className="form-control" placeholder="Prodi" 
+                                    options={this.state.dataProdi.nama} value={this.state.id_prodi} onChange={event => this.setState({id_prodi: event.value})} autoWidth={false}/>
                             </div>
-                            <div className="p-col-12 p-md-6">
-                                <Dropdown placeholder="Fakultas"/>
-                            </div>                     
                         </div>
                     </div>
                 </div>
                 <div className="p-col-12">
                     <div className="p-col-3">
-                        <Button label="Save" icon="pi pi-plus" onClick={this.saveData.bind(this)}/>
+                        <Button label="Save" icon="pi pi-plus" onClick={() => this.saveData()}/>
                     </div>
                 </div>
                 

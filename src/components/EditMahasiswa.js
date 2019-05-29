@@ -105,7 +105,7 @@ export class EditMahasiswa extends Component{
                 </div>
                 <div className="p-col-12">
                     <div className="p-col-3">
-                        <Button label="Update" icon="pi pi-pencil" model={this.state.splitButtonItems} />
+                        <Button label="Update" icon="pi pi-pencil" />
                     </div>
                 </div>
                 

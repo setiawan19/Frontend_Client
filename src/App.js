@@ -29,7 +29,9 @@ import { ListMahasiswa } from './components/ListMahasiswa';
 import { AddMahasiswa } from './components/AddMahasiswa';
 import { EditMahasiswa } from './components/EditMahasiswa';
 import { ListFK_PR } from './components/ListFK_PR';
-import { ListPrediksi } from './components/list_prediksi'
+import { ListPrediksi } from './components/list_prediksi';
+import { PrediksiMahasiswa } from './components/prediksi_mahasiswa';
+import { ListAdmin } from './components/adminlist';
  
 class App extends Component {
 
@@ -106,7 +108,7 @@ class App extends Component {
             {
                 label: 'Master Data', icon: 'pi pi-fw pi-bookmark',
                 items: [
-                    {label: 'Admin User', icon: 'pi pi-fw pi-user' },
+                    {label: 'Admin User', icon: 'pi pi-fw pi-user', to: '/adminlist' },
                     {label: 'Mahasiswa', icon: 'pi pi-fw pi-users', to:'/list_mahasiswa' },
                     {label: 'Fakultas & Prodi', icon: 'pi pi-fw pi-file', to:'/jurusan'}
                 ]
@@ -260,9 +262,11 @@ class App extends Component {
                     <Route path="/EditMahasiswa" component={EditMahasiswa}/>
                     <Route path="/Jurusan" component={ListFK_PR}/>
                     <Route path="/ListPrediksi" component={ListPrediksi}/>
+                    <Route path="/PrediksiMahasiswa" component={PrediksiMahasiswa}/>
+                    <Route path="/adminlist" component={ListAdmin}/>
                 </div>
 
-                <AppFooter />
+                {/* <AppFooter /> */}
 
                 <div className="layout-mask"></div>
             </div>

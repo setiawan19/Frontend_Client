@@ -40,7 +40,7 @@ export class Dashboard extends Component {
 
                
 
-                <div className="p-col-12 p-lg-12 contacts">
+                {/* <div className="p-col-12 p-lg-12 contacts">
                     <Panel header="List Mahasiswa">
                         <ul>
                             <li>
@@ -73,7 +73,7 @@ export class Dashboard extends Component {
                             </li>
                         </ul>
                     </Panel>
-                </div>
+                </div> */}
                 
             </div>
         );
