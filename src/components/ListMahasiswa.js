@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Route, Link } from "react-router-dom";
+import { Route, Link, Redirect } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { OrganizationChart } from "primereact/organizationchart";
 import { Tree } from "primereact/tree";
@@ -35,15 +35,6 @@ export class ListMahasiswa extends Component {
     });
   }
 
-  deleteData() {
-    let index = this.findSelectedDataIndex();
-    this.setState({
-      dataTableValue: this.state.dataTableValue.filter((val, i) => i !== index),
-      selectedData: null,
-      dataTableValue: null,
-      displayDialog: false
-    });
-  }
   findSelectedDataIndex() {
     return this.state.dataTableValue.indexOf(this.state.selectedData);
   }
@@ -54,7 +45,7 @@ export class ListMahasiswa extends Component {
     });
   }
 
-  buttonApp() {
+  buttonAppEdit() {
     return (
       <div>
         <button
@@ -66,10 +57,31 @@ export class ListMahasiswa extends Component {
       </div>
     );
   }
+  deleteData = e => {
+    window.confirm("Delete this ?");
+    axios
+      .delete('http://localhost:3210/mahasiswa/:nim"', {
+        idProduk: e
+      })
+      .then(ambilData => {
+        if (ambilData) {
+          axios.get("http://localhost:3210/mahasiswa").then(ambilData => {
+            this.setState({
+              dataTableValue: ambilData.data
+            });
+          });
+        }
+      });
+    window.alert("Success Delete !");
+    window.location.reload();
+  };
   buttonAppDel() {
     return (
       <div>
-        <button className="btn btn-danger" onClick={() => window.alert("test")}>
+        <button
+          className="btn btn-danger"
+          onClick={() => this.deleteData(this.state.dataTableValue.id)}
+        >
           Delete
         </button>
       </div>
@@ -134,7 +146,7 @@ export class ListMahasiswa extends Component {
               <Column field="nama_prodi" header="Prodi" sortable={true} />
               <Column field="fakultas" header="Fakultas" sortable={true} />
               <Column field="total_sks" header="Total SKS" sortable={true} />
-              <Column header="Edit" body={this.buttonApp.bind(this)} />
+              <Column header="Edit" body={this.buttonAppEdit.bind(this)} />
               <Column header="Delete" body={this.buttonAppDel.bind(this)} />
             </DataTable>
             {/* <table>

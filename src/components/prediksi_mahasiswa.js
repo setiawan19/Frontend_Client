@@ -40,14 +40,21 @@ export class PrediksiMahasiswa extends Component {
           <div className="card card-w-title">
             <h4>Input Grade of Student</h4>
             <div className="p-grid">
-              <div className="p-col-12 p-md-6 form-group">
+              <div className="p-col-12 p-md-4 form-group">
                 <InputText
                   className="form-control"
                   placeholder="Total SKS Lulus"
                   type="number"
                 />
               </div>
-              <div className="p-col-12 p-md-6 form-group">
+              <div className="p-col-12 p-md-4 form-group">
+                <InputText
+                  className="form-control"
+                  placeholder="IPS"
+                  type="number"
+                />
+              </div>
+              <div className="p-col-12 p-md-4 form-group">
                 <InputText
                   className="form-control"
                   placeholder="Semester"

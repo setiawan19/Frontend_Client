@@ -17,45 +17,45 @@ export class ListPrediksi extends Component {
       filteredData: []
     };
   }
-  componentDidMount() {
-    axios.get("http://localhost:3210/view_sks").then(getdata => {
-      this.setState({
-        dataTable: getdata.data
-      });
-    });
-    this.getData();
-  }
+  // componentDidMount() {
+  //   axios.get("http://localhost:3210/view_sks").then(getdata => {
+  //     this.setState({
+  //       dataTable: getdata.data
+  //     });
+  //   });
+  //   this.getData();
+  // }
 
-  handleInputChange = event => {
-    const query = event.target.value;
+  // handleInputChange = event => {
+  //   const query = event.target.value;
 
-    this.setState(prevState => {
-      const filteredData = prevState.data.filter(element => {
-        return element.name.toLowerCase().includes(query.toLowerCase());
-      });
+  //   this.setState(prevState => {
+  //     const filteredData = prevState.data.filter(element => {
+  //       return element.name.toLowerCase().includes(query.toLowerCase());
+  //     });
 
-      return {
-        query,
-        filteredData
-      };
-    });
-  };
+  //     return {
+  //       query,
+  //       filteredData
+  //     };
+  //   });
+  // };
 
-  getData = () => {
-    fetch(`http://localhost:3210/view_sks`)
-      .then(response => response.json())
-      .then(data => {
-        const { query } = this.state;
-        const filteredData = data.filter(element => {
-          return element.name.toLowerCase().includes(query.toLowerCase());
-        });
+  // getData = () => {
+  //   fetch(`http://localhost:3210/view_sks`)
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       const { query } = this.state;
+  //       const filteredData = data.filter(element => {
+  //         return element.name.toLowerCase().includes(query.toLowerCase());
+  //       });
 
-        this.setState({
-          data,
-          filteredData
-        });
-      });
-  };
+  //       this.setState({
+  //         data,
+  //         filteredData
+  //       });
+  //     });
+  // };
 
   render() {
     return (
