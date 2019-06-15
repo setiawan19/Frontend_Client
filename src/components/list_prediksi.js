@@ -17,14 +17,14 @@ export class ListPrediksi extends Component {
       filteredData: []
     };
   }
-  // componentDidMount() {
-  //   axios.get("http://localhost:3210/view_sks").then(getdata => {
-  //     this.setState({
-  //       dataTable: getdata.data
-  //     });
-  //   });
-  //   this.getData();
-  // }
+  componentDidMount() {
+    axios.get("http://localhost:3210/view_sks").then(getdata => {
+      this.setState({
+        dataTable: getdata.data
+      });
+    });
+    // this.getData();
+  }
 
   // handleInputChange = event => {
   //   const query = event.target.value;
@@ -77,7 +77,15 @@ export class ListPrediksi extends Component {
                 ))}
               </div>
             </div> */}
-            <DataTable>
+            <DataTable
+              value={this.state.dataTable}
+              paginatorPosition="both"
+              selectionMode="single"
+              header="List of Studens Prediction Grade"
+              paginator={true}
+              rows={10}
+              responsive={true}
+            >
               <Column field="nim" header="NIM" sortable={true} />
               <Column field="nama" header="Nama" sortable={true} />
               <Column field="prodi" header="Prodi" sortable={true} />

@@ -32,7 +32,8 @@ import { ListFK_PR } from './components/ListFK_PR';
 import { ListPrediksi } from './components/list_prediksi';
 import { PrediksiMahasiswa } from './components/prediksi_mahasiswa';
 import { ListAdmin } from './components/adminlist';
- 
+import { Detail_Mahasiswa } from './components/DetailMhs';
+
 class App extends Component {
 
     constructor() {
@@ -259,11 +260,12 @@ class App extends Component {
                     <Route path="/documentation" component={Documentation} />
                     <Route path="/list_mahasiswa" component={ListMahasiswa} />
                     <Route path="/AddMahasiswa" component={AddMahasiswa}/>
-                    <Route path="/EditMahasiswa" component={EditMahasiswa}/>
+                    <Route path="/EditMahasiswa/:nim" component={EditMahasiswa}/>
                     <Route path="/Jurusan" component={ListFK_PR}/>
                     <Route path="/ListPrediksi" component={ListPrediksi}/>
                     <Route path="/PrediksiMahasiswa" component={PrediksiMahasiswa}/>
                     <Route path="/adminlist" component={ListAdmin}/>
+                    <Route path="Detail_Mahasiswa/:nim" component={Detail_Mahasiswa}/>
                 </div>
 
                 {/* <AppFooter /> */}

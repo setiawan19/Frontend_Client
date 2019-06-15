@@ -24,7 +24,7 @@ export class ListMahasiswa extends Component {
     };
     // this.createdMenu();
     // this.save = this.save.bind(this);
-    this.deleteData = this.deleteData.bind(this);
+    //this.deleteData = this.deleteData.bind(this);
     this.onDataSelect = this.onDataSelect.bind(this);
   }
   componentDidMount() {
@@ -45,76 +45,49 @@ export class ListMahasiswa extends Component {
     });
   }
 
-  buttonAppEdit() {
+  buttonAppDetail = data => {
+    var url1 = `/Detail_Mahasiswa/${data.nim}`;
     return (
       <div>
-        <button
-          className="btn btn-warning"
-          onClick={() => window.alert("test")}
-        >
-          Edit
-        </button>
+        <a className="btn btn-warning">
+          <Link to={url1}>Detail</Link>
+        </a>
       </div>
     );
-  }
-  deleteData = e => {
-    window.confirm("Delete this ?");
-    axios
-      .delete('http://localhost:3210/mahasiswa/:nim"', {
-        idProduk: e
-      })
-      .then(ambilData => {
-        if (ambilData) {
-          axios.get("http://localhost:3210/mahasiswa").then(ambilData => {
-            this.setState({
-              dataTableValue: ambilData.data
-            });
-          });
-        }
-      });
-    window.alert("Success Delete !");
-    window.location.reload();
   };
-  buttonAppDel() {
+  buttonAppEdit = data => {
+    var url1 = `/EditMahasiswa/${data.nim}`;
     return (
       <div>
-        <button
-          className="btn btn-danger"
-          onClick={() => this.deleteData(this.state.dataTableValue.id)}
-        >
-          Delete
-        </button>
+        <a className="btn btn-warning">
+          <Link to={url1}>Edit</Link>
+        </a>
       </div>
     );
-  }
+  };
+  deleteData = data => {
+    if (window.confirm("Delete this ?")) {
+      axios.delete(`http://localhost:3210/mahasiswa/${data.nim}`).then(() => {
+        window.location.reload();
+      });
+    }
+  };
+  buttonAppDel = data => {
+    return (
+      <div>
+        <a className="btn btn-danger" onClick={() => this.deleteData(data)}>
+          Delete
+        </a>
+      </div>
+    );
+  };
 
   render() {
-    // let list_mhs = this.state.dataTableValue.map((item, index)=>{
-    //     var nim = item.nim;
-    //     var nama = item.nama;
-    //     var jenis_kelamin = item.jenis_kelamin;
-    //     var prodi = item.prodi;
-    //     var fakultas = item.fakultas;
-    //     var total_sks = item.total_sks;
-    //     return <tr key={index} style={{textAlign: 'center'}}>
-    //         <td>{nim}</td> <td>{nama}</td> <td>{jenis_kelamin}</td>
-    //         <td>{prodi}</td> <td>{fakultas}</td> <td>{total_sks}</td>
-    //         <td>
-    //         <span>
-    //           <Link to={{ pathname:'/editmahasiswa', state: {nim: nim}}} className="btn btn-warning" style={{marginBottom:40}}><i className="fa fa-pencil-square"></i></Link>
-    //           <button onClick={() => this.deleteData(nim)} className="btn btn-danger"><i className="fa fa-times" aria-hidden="true"></i></button>
-    //         </span>
-    //         </td>
-    //     </tr>
-    // })
     let footer = (
       <div className="p-clearfix" style={{ width: "100%" }}>
-        <button
-          style={{ float: "left" }}
-          className="pi pi-plus btn btn-primary"
-        >
+        <a style={{ float: "left" }} className="edit-btn">
           <Link to="/AddMahasiswa">Add</Link>
-        </button>
+        </a>
       </div>
     );
     return (
@@ -131,10 +104,6 @@ export class ListMahasiswa extends Component {
               paginator={true}
               rows={10}
               responsive={true}
-              selection={this.state.dataTableSelection}
-              onSelectionChange={event =>
-                this.setState({ dataTableSelection: event.value })
-              }
             >
               <Column field="nim" header="NIM" sortable={true} />
               <Column field="nama" header="Nama" sortable={true} />
@@ -146,25 +115,10 @@ export class ListMahasiswa extends Component {
               <Column field="nama_prodi" header="Prodi" sortable={true} />
               <Column field="fakultas" header="Fakultas" sortable={true} />
               <Column field="total_sks" header="Total SKS" sortable={true} />
-              <Column header="Edit" body={this.buttonAppEdit.bind(this)} />
-              <Column header="Delete" body={this.buttonAppDel.bind(this)} />
+              <Column header="Detail" body={this.buttonAppDetail} />
+              <Column header="Edit" body={this.buttonAppEdit} />
+              <Column header="Delete" body={this.buttonAppDel} />
             </DataTable>
-            {/* <table>
-                            <thead>
-                                <tr>
-                                    <th>NIM</th>
-                                    <th>Nama</th>
-                                    <th>Jenis Kelamin</th>
-                                    <th>Prodi</th>
-                                    <th>Fakultas</th>
-                                    <th>Total SKS</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {list_mhs}
-                            </tbody>
-                        </table> */}
           </div>
         </div>
       </div>

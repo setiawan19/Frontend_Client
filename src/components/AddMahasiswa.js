@@ -27,7 +27,7 @@ export class AddMahasiswa extends Component {
       nama: null,
       jenis_kelamin: null,
       tempat_lahir: null,
-      tanggal_lahir: null,
+      tanggal_lahir: "",
       asal_sekolah: null,
       nilai_UN: null,
       tahun_lulus: null,
@@ -39,8 +39,7 @@ export class AddMahasiswa extends Component {
       id_prodi: "",
       nama_prodi: null,
       idprodi: null,
-      prodi: [],
-      selectedTeam: ""
+      prodi: []
     };
   }
   componentDidMount() {
@@ -91,9 +90,15 @@ export class AddMahasiswa extends Component {
       })
       .then(function(response) {
         console.log(response);
+        if (alert("anda gagal menambahkan data")) {
+          window.location("/list_mahasiswa");
+        }
       })
       .catch(function(error) {
         console.log(error);
+        if (alert("anda gagal menambahkan data")) {
+          window.location.reload();
+        }
       });
     // this.nim.value = "";
     // this.nama.value = "";
