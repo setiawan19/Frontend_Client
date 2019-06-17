@@ -21,15 +21,39 @@ export class EditMahasiswa extends Component {
       radioValue: null,
       dropdownProdi: null,
       dropdownFakultas: null,
-      ratingValue: null
+      ratingValue: null,
+      nim: null,
+      nama: null,
+      jenis_kelamin: null,
+      tempat_lahir: null,
+      tanggal_lahir: "",
+      asal_sekolah: null,
+      nilai_UN: null,
+      tahun_lulus: null,
+      tahun_masuk_kuliah: null,
+      no_hp: null,
+      email: null,
+      pekerjaan_orangtua: null,
+      jurusan_sekolah: null,
+      id_prodi: "",
+      nama_prodi: null,
+      idprodi: null,
+      prodi: []
     };
+  }
+  componentDidMount() {
+    axios.get("http://localhost:3210/prodi").then(getdata => {
+      this.setState({
+        prodi: getdata.data
+      });
+    });
   }
   saveData() {
     axios
       .post(`http://localhost:3210/mahasiswa/${this.params}`)
-      .then(getdata => {
+      .then(postdata => {
         this.setState({
-          dataTableValue: getdata.data
+          dataTableValue: postdata.data
         });
       });
   }
@@ -122,10 +146,28 @@ export class EditMahasiswa extends Component {
                 <InputText placeholder="Tahun Masuk Kuliah" />
               </div>
               <div className="p-col-12 p-md-6">
-                <Dropdown placeholder="Prodi" />
-              </div>
-              <div className="p-col-12 p-md-6">
-                <Dropdown placeholder="Fakultas" />
+                {/* <Dropdown
+                  options={prodiSelectItems}
+                  placeholder="Prodi"
+                  value={this.state.id_prodi}
+                  onChange={e => this.setState({ id_prodi: e.value })}
+                /> */}
+                <select
+                  value={this.state.id_prodi}
+                  onChange={e =>
+                    this.setState({
+                      id_prodi: e.target.value,
+                      validationError:
+                        e.target.value === "" ? "select prodi" : ""
+                    })
+                  }
+                >
+                  {this.state.prodi.map((item, ind) => (
+                    <option key={ind} value={item.id}>
+                      {item.nama}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>

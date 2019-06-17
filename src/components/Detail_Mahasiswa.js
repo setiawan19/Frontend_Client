@@ -12,9 +12,16 @@ export class Detail_Mahasiswa extends Component {
   }
 
   componentDidMount() {
-    var pathName = window.location.pathname;
+    var pathName = window.location.href;
     var nim = pathName.split("/");
     var hasil = nim[nim.length - 1];
+    // var nim = pathName.match(/[0-9]/g);
+    // var hasil = "";
+    // for (var i = 0; i < nim.length; i++) {
+    //   if (i > 3) {
+    //     hasil += nim[i];
+    //   }
+    // }
     axios.get(`http://localhost:3210/mahasiswa/` + hasil).then(getData => {
       this.setState({
         data_Mhs: getData.data

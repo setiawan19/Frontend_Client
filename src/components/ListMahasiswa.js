@@ -16,6 +16,10 @@ import { Dropdown } from "primereact/dropdown";
 import { DataView, DataViewLayoutOptions } from "primereact/dataview";
 // import {AddMahasiswa} from './AddMahasiswa';
 
+import { AddMahasiswa } from "./AddMahasiswa";
+import { EditMahasiswa } from "./EditMahasiswa";
+import { Detail_Mahasiswa } from "./Detail_Mahasiswa";
+
 export class ListMahasiswa extends Component {
   constructor() {
     super();
@@ -121,6 +125,13 @@ export class ListMahasiswa extends Component {
             </DataTable>
           </div>
         </div>
+        {/* <div className="p-col-12">
+          <div className="card card-w-title">
+            <Route path="/Detail_Mahasiswa/:nim" component={Detail_Mahasiswa} />
+            <Route path="/AddMahasiswa" component={AddMahasiswa} />
+            <Route path="/EditMahasiswa/:nim" component={EditMahasiswa} />
+          </div>
+        </div> */}
       </div>
     );
   }

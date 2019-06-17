@@ -90,7 +90,7 @@ export class AddMahasiswa extends Component {
       })
       .then(function(response) {
         console.log(response);
-        if (alert("anda gagal menambahkan data")) {
+        if (alert("anda Berhasil menambahkan data")) {
           window.location("/list_mahasiswa");
         }
       })

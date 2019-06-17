@@ -25,6 +25,16 @@ export class ListPrediksi extends Component {
     });
     // this.getData();
   }
+  buttonAppDetail = data => {
+    var url1 = `/PrediksiMahasiswa/${data.nim}`;
+    return (
+      <div>
+        <button className="btn btn-warning">
+          <Link to={url1}>Detail</Link>
+        </button>
+      </div>
+    );
+  };
 
   // handleInputChange = event => {
   //   const query = event.target.value;
@@ -98,7 +108,7 @@ export class ListPrediksi extends Component {
               />
               <Column field="IPS" header="IPS" sortable={true} />
               <Column field="IPK" header="Total SKS Lulus" sortable={true} />
-              <Column header="Action" value="detail" />
+              <Column header="Action" body={this.buttonAppDetail} />
             </DataTable>
           </div>
         </div>

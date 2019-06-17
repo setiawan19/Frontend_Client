@@ -22,18 +22,76 @@ export class PrediksiMahasiswa extends Component {
   constructor() {
     super();
     this.state = {
-      dataTable: []
+      dataTable: [],
+      smsMax: [],
+      nim: 20191011,
+      nama: "",
+      sks_lulus: 0,
+      ips: 0,
+      ipk: 0,
+      semester: 0,
+      tahun: 0,
+      sisa_sks: 0,
+      total_sks: 0,
+      target_wisuda: "",
+      semesterMax: 0
     };
   }
   componentDidMount() {
-    axios.get("http://localhost:3210/view_sks/:nim").then(getdata => {
+    axios.get("http://localhost:3210/view_sks/20191011").then(getdata => {
       this.setState({
         dataTable: getdata.data
       });
     });
-    console.log(this.state.dataTable.nama);
   }
+  componentWillMount() {
+    axios.get("http://localhost:3210/semester/20191011").then(smsdata => {
+      this.setState({
+        smsMax: smsdata.data
+      });
+    });
+  }
+
+  // AddData() {
+  //   axios.post("http://localhost:3210/view_sks/add/20191011").then(postData => {
+  //     this.setState({
+  //       data: [
+  //         {
+  //           nim: this.state.data.nim,
+  //           nama: this.state.dataTable.nama,
+  //           sks_lulus: this.state.sks_lulus,
+  //           ips: this.state.data.ips,
+  //           ipk: this.state.data.ipk,
+  //           semester: this.state.semester,
+  //           tahun: this.state.data.tahun,
+  //           sisa_sks: this.state.data.sisa_sks,
+  //           total_sks: this.state.data.total_sks,
+  //           target_wisuda: this.state.data.target_wisuda
+  //         }
+  //       ]
+  //     }).then(function(response) {
+  //       window.location.reload();
+  //     });
+  //   });
+  // }
+
   render() {
+    const listItems = this.state.dataTable.map((item, ind) => (
+      <tr key={ind}>
+        <td>{item.sisa_sks}</td>
+        <td>{item.target_wisuda}</td>
+      </tr>
+    ));
+
+    let smax = this.state.smsMax.map((itm, ind) => (
+      <tr key={ind}>
+        <td>semester = {itm.semester}</td>
+        <td>sisa sks = {itm.sisa_sks}</td>
+      </tr>
+    ));
+    let aaa = e => this.setState({ semesterMax: this.state.smsMax.semester });
+    console.log("haloo", this.state.semesterMax);
+
     return (
       <div className="p-grid">
         <div className="p-col-12">
@@ -45,6 +103,8 @@ export class PrediksiMahasiswa extends Component {
                   className="form-control"
                   placeholder="Total SKS Lulus"
                   type="number"
+                  value={this.state.total_sks}
+                  onChange={e => this.setState({ total_sks: e.target.value })}
                 />
               </div>
               <div className="p-col-12 p-md-4 form-group">
@@ -52,6 +112,8 @@ export class PrediksiMahasiswa extends Component {
                   className="form-control"
                   placeholder="IPS"
                   type="number"
+                  value={this.state.ips}
+                  onChange={e => this.setState({ ips: e.target.value })}
                 />
               </div>
               <div className="p-col-12 p-md-4 form-group">
@@ -59,6 +121,8 @@ export class PrediksiMahasiswa extends Component {
                   className="form-control"
                   placeholder="Semester"
                   type="number"
+                  value={this.state.semester}
+                  onChange={e => this.setState({ semester: e.target.value })}
                 />
               </div>
               <div className="p-col-12 p-md-6 form-group">
@@ -70,13 +134,13 @@ export class PrediksiMahasiswa extends Component {
             <h1>Prediksi Nilai</h1>
             <DataTable
               value={this.state.dataTable}
-              paginatorPosition="both"
+              //paginatorPosition="both"
               selectionMode="single"
               header="List of Student Grades"
               paginator={true}
               rows={10}
               responsive={true}
-              selection={this.state.dataTableSelection}
+              //selection={this.state.dataTableSelection}
               onSelectionChange={event =>
                 this.setState({ dataTableSelection: event.value })
               }
@@ -92,13 +156,32 @@ export class PrediksiMahasiswa extends Component {
               <Column field="sisa_sks" header="Sisa SKS" sortable={true} />
               <Column field="total_sks" header="Total SKS" />
               <Column
-                field="total_sks"
+                field="target_wisuda"
                 header="Target Wisuda"
                 sortable={true}
               />
               <Column field="prodi" header="Prodi" sortable={true} />
               <Column field="fakultas" header="Fakultas" sortable={true} />
             </DataTable>
+          </div>
+          <div className="card card-w-title">
+            <h4>Review Your Graduation</h4>
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <p>Anda akan lulus :</p>
+                  </td>
+                  <td>
+                    {/* {this.state.dataTable.map(item => {
+                    item.target_wisuda;
+                  })} */}
+                  </td>
+                </tr>
+                {listItems}
+                {smax}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
