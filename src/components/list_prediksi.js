@@ -27,11 +27,12 @@ export class ListPrediksi extends Component {
   }
   buttonAppDetail = data => {
     var url1 = `/PrediksiMahasiswa/${data.nim}`;
+    var nim1 = `${data.nim}`;
     return (
       <div>
-        <button className="btn btn-warning">
-          <Link to={url1}>Detail</Link>
-        </button>
+        <Link to={{ pathname: url1, state: { nim1: nim1 } }}>
+          <button className="btn btn-warning">Detail</button>
+        </Link>
       </div>
     );
   };

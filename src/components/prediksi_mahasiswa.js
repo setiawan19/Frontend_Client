@@ -37,15 +37,32 @@ export class PrediksiMahasiswa extends Component {
       semesterMax: 0
     };
   }
+  // componentDidMount() {
+  //   axios.get("http://localhost:3210/view_sks/20191011").then(getdata => {
+  //     this.setState({
+  //       dataTable: getdata.data
+  //     });
+  //   });
+  // }
+  // componentWillMount() {
+  //   axios.get("http://localhost:3210/semester/20191011").then(smsdata => {
+  //     this.setState({
+  //       smsMax: smsdata.data
+  //     });
+  //   });
+  // }
   componentDidMount() {
-    axios.get("http://localhost:3210/view_sks/20191011").then(getdata => {
+    var nimDetails = this.props.location.state.nim1;
+    console.log(nimDetails);
+    axios.get(`http://localhost:3210/view_sks/${nimDetails}`).then(getdata => {
       this.setState({
         dataTable: getdata.data
       });
     });
   }
   componentWillMount() {
-    axios.get("http://localhost:3210/semester/20191011").then(smsdata => {
+    var nimDetails = this.props.location.state.nim1;
+    axios.get(`http://localhost:3210/semester/${nimDetails}`).then(smsdata => {
       this.setState({
         smsMax: smsdata.data
       });
@@ -76,6 +93,10 @@ export class PrediksiMahasiswa extends Component {
   // }
 
   render() {
+    console.log(this.props.location.state.nim1);
+    console.log("test", this.state.dataTable);
+    console.log("test2", this.state.smsMax);
+
     const listItems = this.state.dataTable.map((item, ind) => (
       <tr key={ind}>
         <td>{item.sisa_sks}</td>
