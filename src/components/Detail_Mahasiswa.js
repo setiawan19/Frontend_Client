@@ -12,17 +12,10 @@ export class Detail_Mahasiswa extends Component {
   }
 
   componentDidMount() {
-    var pathName = window.location.href;
-    var nim = pathName.split("/");
-    var hasil = nim[nim.length - 1];
-    // var nim = pathName.match(/[0-9]/g);
-    // var hasil = "";
-    // for (var i = 0; i < nim.length; i++) {
-    //   if (i > 3) {
-    //     hasil += nim[i];
-    //   }
-    // }
-    axios.get(`http://localhost:3210/mahasiswa/` + hasil).then(getData => {
+    var nimDetail = this.props.location.state.nim2;
+    var url = `http://localhost:3210/mahasiswa/${nimDetail}`;
+
+    axios.get(url).then(getData => {
       this.setState({
         data_Mhs: getData.data
       });
@@ -30,33 +23,15 @@ export class Detail_Mahasiswa extends Component {
   }
 
   render() {
-    // const listSiswa = this.state.data_Mhs.map((item, index) => (
-    //   <tr key={index}>
-    //     <td>{item.nim}</td>
-    //     <td>{item.nama}</td>
-    //     <td>{item.jenis_kelamin}</td>
-    //     <td>{item.tempat_lahir}</td>
-    //     <td>{item.tanggal_lahir}</td>
-    //     <td>{item.asal_sekolah}</td>
-    //     <td>{item.nilai_UN}</td>
-    //     <td>{item.tahun_lulus}</td>
-    //     <td>{item.tahun_masuk_kuliah}</td>
-    //     <td>{item.no_hp}</td>
-    //     <td>{item.email}</td>
-    //     <td>{item.pekerjaan_orangtua}</td>
-    //     <td>{item.jurusan_sekolah}</td>
-    //     <td>{item.prodi}</td>
-    //     <td>{item.total_sks}</td>
-    //     <td>{item.fakultas}</td>
-    //   </tr>
-    // ));
+    // console.log(nimDetail);
+
     return (
       <div className="p-grid">
         <div className="p-col-12">
           <div className="card card-w-title">
             <h1>DataTable</h1>
             <DataTable
-              value={this.state.dataTableValue}
+              value={this.state.data_Mhs}
               paginatorPosition="both"
               selectionMode="single"
               // footer={footer}
@@ -75,11 +50,11 @@ export class Detail_Mahasiswa extends Component {
               <Column field="tempat_lahir" header="Lahir" sortable={true} />
               <Column field="tanggal_lahir" header="Birth" sortable={true} />
               <Column field="asal_sekolah" header="Sekolah" sortable={true} />
+              <Column field="no_hp" header="Phone" sortable={true} />
+              <Column field="email" header="Email" sortable={true} />
               <Column field="nama_prodi" header="Prodi" sortable={true} />
               <Column field="fakultas" header="Fakultas" sortable={true} />
               <Column field="total_sks" header="Total SKS" sortable={true} />
-              <Column header="Edit" body={this.buttonAppEdit} />
-              <Column header="Delete" body={this.buttonAppDel} />
             </DataTable>
           </div>
         </div>

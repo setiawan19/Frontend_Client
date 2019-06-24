@@ -26,7 +26,7 @@ export class EditMahasiswa extends Component {
       nama: null,
       jenis_kelamin: null,
       tempat_lahir: null,
-      tanggal_lahir: "",
+      tanggal_lahir: null,
       asal_sekolah: null,
       nilai_UN: null,
       tahun_lulus: null,

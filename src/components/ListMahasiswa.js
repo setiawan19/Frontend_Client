@@ -50,12 +50,13 @@ export class ListMahasiswa extends Component {
   }
 
   buttonAppDetail = data => {
-    var url1 = `/Detail_Mahasiswa/${data.nim}`;
+    var url2 = `/Detail_Mahasiswa/${data.nim}`;
+    var nim2 = `${data.nim}`;
     return (
       <div>
-        <a className="btn btn-warning">
-          <Link to={url1}>Detail</Link>
-        </a>
+        <Link to={{ pathname: url2, state: { nim2: nim2 } }}>
+          <button className="btn btn-warning">Detail</button>
+        </Link>
       </div>
     );
   };

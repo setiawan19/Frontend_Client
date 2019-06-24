@@ -19,38 +19,25 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 
 export class PrediksiMahasiswa extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       dataTable: [],
       smsMax: [],
-      nim: 20191011,
-      nama: "",
+      nim: null,
+      nama: null,
       sks_lulus: 0,
       ips: 0,
-      ipk: 0,
+      ipk: null,
       semester: 0,
-      tahun: 0,
-      sisa_sks: 0,
+      tahun: null,
+      sisa_sks: null,
       total_sks: 0,
       target_wisuda: "",
-      semesterMax: 0
+      semesterMax: null
     };
   }
-  // componentDidMount() {
-  //   axios.get("http://localhost:3210/view_sks/20191011").then(getdata => {
-  //     this.setState({
-  //       dataTable: getdata.data
-  //     });
-  //   });
-  // }
-  // componentWillMount() {
-  //   axios.get("http://localhost:3210/semester/20191011").then(smsdata => {
-  //     this.setState({
-  //       smsMax: smsdata.data
-  //     });
-  //   });
-  // }
+
   componentDidMount() {
     var nimDetails = this.props.location.state.nim1;
     console.log(nimDetails);
@@ -62,57 +49,190 @@ export class PrediksiMahasiswa extends Component {
   }
   componentWillMount() {
     var nimDetails = this.props.location.state.nim1;
-    axios.get(`http://localhost:3210/semester/${nimDetails}`).then(smsdata => {
+    axios.get(`http://localhost:3210/semester/${nimDetails}`).then(getdata => {
       this.setState({
-        smsMax: smsdata.data
+        smsMax: getdata.data
       });
     });
   }
+  save() {
+    // Get Year
+    var newYear = new Date();
+    var years = newYear.getFullYear();
+    console.log("TAHUN", years);
 
-  // AddData() {
-  //   axios.post("http://localhost:3210/view_sks/add/20191011").then(postData => {
-  //     this.setState({
-  //       data: [
-  //         {
-  //           nim: this.state.data.nim,
-  //           nama: this.state.dataTable.nama,
-  //           sks_lulus: this.state.sks_lulus,
-  //           ips: this.state.data.ips,
-  //           ipk: this.state.data.ipk,
-  //           semester: this.state.semester,
-  //           tahun: this.state.data.tahun,
-  //           sisa_sks: this.state.data.sisa_sks,
-  //           total_sks: this.state.data.total_sks,
-  //           target_wisuda: this.state.data.target_wisuda
-  //         }
-  //       ]
-  //     }).then(function(response) {
-  //       window.location.reload();
-  //     });
-  //   });
-  // }
+    // Get Total IPS
+    var total_ips = 0;
+    for (var i = 0; i < this.state.dataTable.length; i++) {
+      total_ips = total_ips + this.state.dataTable[i].ips;
+      console.log("TOTAL IPS", total_ips);
+    }
+
+    // Get IPK
+    var Total_ipk =
+      (parseFloat(total_ips) + parseFloat(this.state.ips)) /
+      this.state.semester;
+    var hasil_ipk = Total_ipk.toFixed(2);
+    console.log("IPK", hasil_ipk);
+    console.log("IPS", this.state.ips);
+    console.log("TOTAL IPS", total_ips);
+
+    // Get Total SKS
+    var totalSKS = 0;
+    for (var i = 0; i < this.state.dataTable.length; i++) {
+      totalSKS += this.state.dataTable[i].sks_lulus;
+    }
+    var totalSksLulus = parseInt(this.state.sks_lulus) + parseInt(totalSKS);
+
+    // Get Sisa SKS
+    var SisaSks =
+      parseInt(this.state.dataTable[0].total_sks) - parseInt(totalSksLulus);
+    console.log("Sisa SKS", SisaSks);
+    if (SisaSks < 0) {
+      SisaSks = 0;
+    }
+    // Get Target Wisuda
+    var TargetWisuda = SisaSks / 24;
+    var PrediksiWisuda = "";
+
+    if (SisaSks <= 0) {
+      var PrediksiWisuda = "Selamat Anda Lulus";
+      console.log(PrediksiWisuda);
+    } else {
+      var PrediksiWisuda =
+        "Target Wisuda " + (Math.floor(TargetWisuda) + 1) + " Semester lagi";
+      console.log(PrediksiWisuda);
+    }
+    // this.setState({ target_wisuda: PrediksiWisuda });
+
+    var nimDetails = this.props.location.state.nim1;
+    var url = `http://localhost:3210/view_sks/add/${nimDetails}`;
+    axios
+      .post(url, {
+        nim: nimDetails,
+        sks_lulus: this.state.sks_lulus,
+        ips: this.state.ips,
+        ipk: hasil_ipk,
+        semester: this.state.semester,
+        tahun: years,
+        sisa_sks: SisaSks,
+        target_wisuda: PrediksiWisuda
+      })
+      .then(function(response) {
+        console.log(response);
+        if (alert("anda Berhasil menambahkan data")) {
+          window.location.reload();
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+        if (alert("anda gagal menambahkan data")) {
+          window.location.reload();
+        }
+      });
+  }
+  // addInput = () => {
+  //   return (
+  //     <div className="p-grid">
+  //       <h5>Input Grade of Student</h5>
+  //       <div className="p-col-12 p-md-4 form-group">
+  //         <label>SKS Lulus :</label>
+  //         <InputText
+  //           className="form-control"
+  //           placeholder="SKS Lulus"
+  //           type="number"
+  //           value={this.state.sks_lulus}
+  //           onChange={e => this.setState({ sks_lulus: e.target.value })}
+  //         />
+  //       </div>
+  //       <div className="p-col-12 p-md-4 form-group">
+  //         <label>IPS :</label>
+  //         <InputText
+  //           className="form-control"
+  //           placeholder="IPS"
+  //           type="number"
+  //           value={this.state.ips}
+  //           onChange={e => this.setState({ ips: e.target.value })}
+  //         />
+  //       </div>
+  //       <div className="p-col-12 p-md-4 form-group">
+  //         <label>Semester :</label>
+  //         <InputText
+  //           className="form-control"
+  //           placeholder="Semester"
+  //           type="number"
+  //           value={this.state.semester}
+  //           onChange={e => this.setState({ semester: e.target.value })}
+  //         />
+  //       </div>
+  //       <div className="p-col-12 p-md-6 form-group">
+  //         <button
+  //           onClick={() => {
+  //             this.save();
+  //           }}
+  //         >
+  //           add
+  //         </button>
+  //       </div>
+  //     </div>
+  //   );
+  // };
+  // editInput = () => {
+  //   return (
+  //     <div className="p-grid">
+  //       <h5>Input Grade of Student</h5>
+  //       <div className="p-col-12 p-md-4 form-group">
+  //         <InputText
+  //           className="form-control"
+  //           placeholder="Total SKS Lulus"
+  //           type="number"
+  //           value={this.state.sks_lulus}
+  //           onChange={e => this.setState({ sks_lulus: e.target.value })}
+  //         />
+  //       </div>
+  //       <div className="p-col-12 p-md-4 form-group">
+  //         <InputText
+  //           className="form-control"
+  //           placeholder="IPS"
+  //           type="number"
+  //           value={this.state.ips}
+  //           onChange={e => this.setState({ ips: e.target.value })}
+  //         />
+  //       </div>
+  //       <div className="p-col-12 p-md-4 form-group">
+  //         <InputText
+  //           className="form-control"
+  //           placeholder="Semester"
+  //           type="number"
+  //           value={this.state.semester}
+  //           onChange={e => this.setState({ semester: e.target.value })}
+  //         />
+  //       </div>
+  //       <div className="p-col-12 p-md-6 form-group">
+  //         <button
+  //           onClick={() => {
+  //             this.save();
+  //           }}
+  //         >
+  //           Edit
+  //         </button>
+  //       </div>
+  //     </div>
+  //   );
+  // };
 
   render() {
-    console.log(this.props.location.state.nim1);
-    console.log("test", this.state.dataTable);
-    console.log("test2", this.state.smsMax);
-
-    const listItems = this.state.dataTable.map((item, ind) => (
-      <tr key={ind}>
-        <td>{item.sisa_sks}</td>
-        <td>{item.target_wisuda}</td>
-      </tr>
+    let hasil_review = this.state.smsMax.map(itm => (
+      <td key={itm}> {itm.target_wisuda}</td>
     ));
-
-    let smax = this.state.smsMax.map((itm, ind) => (
-      <tr key={ind}>
-        <td>semester = {itm.semester}</td>
-        <td>sisa sks = {itm.sisa_sks}</td>
-      </tr>
-    ));
-    let aaa = e => this.setState({ semesterMax: this.state.smsMax.semester });
-    console.log("haloo", this.state.semesterMax);
-
+    // let tombol = () => {
+    //   return (
+    //     <div>
+    //       <button onClick={this.addInput}>Add</button>
+    //       {/* <button onClick={this.editInput}>Edit</button> */}
+    //     </div>
+    //   );
+    // };
     return (
       <div className="p-grid">
         <div className="p-col-12">
@@ -120,15 +240,17 @@ export class PrediksiMahasiswa extends Component {
             <h4>Input Grade of Student</h4>
             <div className="p-grid">
               <div className="p-col-12 p-md-4 form-group">
+                <label>SKS Lulus : </label>
                 <InputText
                   className="form-control"
-                  placeholder="Total SKS Lulus"
+                  placeholder="SKS Lulus"
                   type="number"
-                  value={this.state.total_sks}
-                  onChange={e => this.setState({ total_sks: e.target.value })}
+                  value={this.state.sks_lulus}
+                  onChange={e => this.setState({ sks_lulus: e.target.value })}
                 />
               </div>
               <div className="p-col-12 p-md-4 form-group">
+                <label>IPS : </label>
                 <InputText
                   className="form-control"
                   placeholder="IPS"
@@ -138,6 +260,7 @@ export class PrediksiMahasiswa extends Component {
                 />
               </div>
               <div className="p-col-12 p-md-4 form-group">
+                <label>Semester : </label>
                 <InputText
                   className="form-control"
                   placeholder="Semester"
@@ -147,10 +270,20 @@ export class PrediksiMahasiswa extends Component {
                 />
               </div>
               <div className="p-col-12 p-md-6 form-group">
-                <button>save</button>
+                <button
+                  onClick={() => {
+                    this.save();
+                  }}
+                >
+                  save
+                </button>
               </div>
             </div>
+            {/* {this.addInput}
+            {this.editInput} */}
           </div>
+
+          {/* Tabel Hasil */}
           <div className="card card-w-title">
             <h1>Prediksi Nilai</h1>
             <DataTable
@@ -173,16 +306,13 @@ export class PrediksiMahasiswa extends Component {
               <Column field="ipk" header="IPK" sortable={true} />
 
               <Column field="semester" header="Semester" sortable={true} />
-              <Column field="tahun" header="TAHUN" sortable={true} />
+              <Column field="tahun" header="Tahun" sortable={true} />
               <Column field="sisa_sks" header="Sisa SKS" sortable={true} />
               <Column field="total_sks" header="Total SKS" />
-              <Column
-                field="target_wisuda"
-                header="Target Wisuda"
-                sortable={true}
-              />
+              <Column field="target_wisuda" header="Target" sortable={true} />
               <Column field="prodi" header="Prodi" sortable={true} />
               <Column field="fakultas" header="Fakultas" sortable={true} />
+              {/* <Column header="" body={this.tombol} /> */}
             </DataTable>
           </div>
           <div className="card card-w-title">
@@ -191,16 +321,12 @@ export class PrediksiMahasiswa extends Component {
               <tbody>
                 <tr>
                   <td>
-                    <p>Anda akan lulus :</p>
+                    <p>
+                      <b>Result :</b>
+                    </p>
                   </td>
-                  <td>
-                    {/* {this.state.dataTable.map(item => {
-                    item.target_wisuda;
-                  })} */}
-                  </td>
+                  {hasil_review}
                 </tr>
-                {listItems}
-                {smax}
               </tbody>
             </table>
           </div>

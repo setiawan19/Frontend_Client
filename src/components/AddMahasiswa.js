@@ -49,27 +49,7 @@ export class AddMahasiswa extends Component {
       });
     });
   }
-  //   componentDidMount() {
-  //     fetch("http://localhost:3210/prodi")
-  //       .then(response => {
-  //         return response.json();
-  //       })
-  //       .then(data => {
-  //         let teamsFromApi = data.map(team => {
-  //           return { value: data.id, display: data.nama };
-  //         });
-  //         this.setState({
-  //           prodi: [
-  //             { value: "", display: "(Select your favourite team)" }
-  //           ].concat(teamsFromApi)
-  //         });
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //       });
-  //   }
   saveData() {
-    // e.preventDefault();
     var url = "http://localhost:3210/mahasiswa";
     axios
       .post(url, {
@@ -100,20 +80,6 @@ export class AddMahasiswa extends Component {
           window.location.reload();
         }
       });
-    // this.nim.value = "";
-    // this.nama.value = "";
-    // this.jenis_kelamin.value = "";
-    // this.tempat_lahir.value = "";
-    // this.tanggal_lahir.value = "";
-    // this.asal_sekolah.value = "";
-    // this.nilai_UN.value = "";
-    // this.tahun_lulus.value = "";
-    // this.tahun_masuk_kuliah.value = "";
-    // this.no_hp.value = "";
-    // this.email.value = "";
-    // this.pekerjaan_orangtua.value = "";
-    // this.jurusan_sekolah.value = "";
-    // this.id_prodi.value = "";
   }
 
   test() {

@@ -37,57 +37,12 @@ export class ListPrediksi extends Component {
     );
   };
 
-  // handleInputChange = event => {
-  //   const query = event.target.value;
-
-  //   this.setState(prevState => {
-  //     const filteredData = prevState.data.filter(element => {
-  //       return element.name.toLowerCase().includes(query.toLowerCase());
-  //     });
-
-  //     return {
-  //       query,
-  //       filteredData
-  //     };
-  //   });
-  // };
-
-  // getData = () => {
-  //   fetch(`http://localhost:3210/view_sks`)
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       const { query } = this.state;
-  //       const filteredData = data.filter(element => {
-  //         return element.name.toLowerCase().includes(query.toLowerCase());
-  //       });
-
-  //       this.setState({
-  //         data,
-  //         filteredData
-  //       });
-  //     });
-  // };
-
   render() {
     return (
       <div className="p-grid">
         <div className="p-col-12">
           <div className="card card-w-title">
             <h1>List Prediksi Nilai</h1>
-            {/* <div className="searchForm">
-              <form>
-                <input
-                  placeholder="Search for..."
-                  value={this.state.query}
-                  onChange={this.handleInputChange}
-                />
-              </form>
-              <div>
-                {this.state.filteredData.map(i => (
-                  <p>{i.nama}</p>
-                ))}
-              </div>
-            </div> */}
             <DataTable
               value={this.state.dataTable}
               paginatorPosition="both"
@@ -100,15 +55,9 @@ export class ListPrediksi extends Component {
               <Column field="nim" header="NIM" sortable={true} />
               <Column field="nama" header="Nama" sortable={true} />
               <Column field="prodi" header="Prodi" sortable={true} />
-              <Column field="fakultas" header="Fakultas" sortable={true} />
+              <Column field="fk" header="Fakultas" sortable={true} />
               <Column field="total_sks" header="Total SKS" sortable={true} />
-              <Column
-                field="sks_lulus"
-                header="Total SKS Lulus"
-                sortable={true}
-              />
-              <Column field="IPS" header="IPS" sortable={true} />
-              <Column field="IPK" header="Total SKS Lulus" sortable={true} />
+              <Column field="ipk" header="IPK" sortable={true} />
               <Column header="Action" body={this.buttonAppDetail} />
             </DataTable>
           </div>
