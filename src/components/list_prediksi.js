@@ -3,6 +3,7 @@ import axios from "axios";
 import { Route, Link } from "react-router-dom";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
+import { Button } from "primereact/button";
 // import { Table, Button, Alert } from "react-bootstrap";
 
 import { DataView, DataViewLayoutOptions } from "primereact/dataview";
@@ -31,13 +32,22 @@ export class ListPrediksi extends Component {
     return (
       <div>
         <Link to={{ pathname: url1, state: { nim1: nim1 } }}>
-          <button className="btn btn-warning">Detail</button>
+          <Button label="Detail" className="p-button-primary" />
         </Link>
       </div>
     );
   };
 
   render() {
+    let addData = (
+      <div className="p-clearfix" style={{ width: "15%" }}>
+        <a style={{ float: "left" }} className="edit-btn">
+          <Link to="/AddPrediksi">
+            <Button label="Add" icon="pi pi-plus" />
+          </Link>
+        </a>
+      </div>
+    );
     return (
       <div className="p-grid">
         <div className="p-col-12">
@@ -47,7 +57,7 @@ export class ListPrediksi extends Component {
               value={this.state.dataTable}
               paginatorPosition="both"
               selectionMode="single"
-              header="List of Studens Prediction Grade"
+              header={addData}
               paginator={true}
               rows={10}
               responsive={true}

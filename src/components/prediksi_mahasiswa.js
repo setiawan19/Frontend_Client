@@ -9,7 +9,6 @@ import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import { ListBox } from "primereact/listbox";
 import { Rating } from "primereact/rating";
-import { ColorPicker } from "primereact/colorpicker";
 import { Editor } from "primereact/editor";
 import { ToggleButton } from "primereact/togglebutton";
 import { SelectButton } from "primereact/selectbutton";
@@ -131,108 +130,12 @@ export class PrediksiMahasiswa extends Component {
         }
       });
   }
-  // addInput = () => {
-  //   return (
-  //     <div className="p-grid">
-  //       <h5>Input Grade of Student</h5>
-  //       <div className="p-col-12 p-md-4 form-group">
-  //         <label>SKS Lulus :</label>
-  //         <InputText
-  //           className="form-control"
-  //           placeholder="SKS Lulus"
-  //           type="number"
-  //           value={this.state.sks_lulus}
-  //           onChange={e => this.setState({ sks_lulus: e.target.value })}
-  //         />
-  //       </div>
-  //       <div className="p-col-12 p-md-4 form-group">
-  //         <label>IPS :</label>
-  //         <InputText
-  //           className="form-control"
-  //           placeholder="IPS"
-  //           type="number"
-  //           value={this.state.ips}
-  //           onChange={e => this.setState({ ips: e.target.value })}
-  //         />
-  //       </div>
-  //       <div className="p-col-12 p-md-4 form-group">
-  //         <label>Semester :</label>
-  //         <InputText
-  //           className="form-control"
-  //           placeholder="Semester"
-  //           type="number"
-  //           value={this.state.semester}
-  //           onChange={e => this.setState({ semester: e.target.value })}
-  //         />
-  //       </div>
-  //       <div className="p-col-12 p-md-6 form-group">
-  //         <button
-  //           onClick={() => {
-  //             this.save();
-  //           }}
-  //         >
-  //           add
-  //         </button>
-  //       </div>
-  //     </div>
-  //   );
-  // };
-  // editInput = () => {
-  //   return (
-  //     <div className="p-grid">
-  //       <h5>Input Grade of Student</h5>
-  //       <div className="p-col-12 p-md-4 form-group">
-  //         <InputText
-  //           className="form-control"
-  //           placeholder="Total SKS Lulus"
-  //           type="number"
-  //           value={this.state.sks_lulus}
-  //           onChange={e => this.setState({ sks_lulus: e.target.value })}
-  //         />
-  //       </div>
-  //       <div className="p-col-12 p-md-4 form-group">
-  //         <InputText
-  //           className="form-control"
-  //           placeholder="IPS"
-  //           type="number"
-  //           value={this.state.ips}
-  //           onChange={e => this.setState({ ips: e.target.value })}
-  //         />
-  //       </div>
-  //       <div className="p-col-12 p-md-4 form-group">
-  //         <InputText
-  //           className="form-control"
-  //           placeholder="Semester"
-  //           type="number"
-  //           value={this.state.semester}
-  //           onChange={e => this.setState({ semester: e.target.value })}
-  //         />
-  //       </div>
-  //       <div className="p-col-12 p-md-6 form-group">
-  //         <button
-  //           onClick={() => {
-  //             this.save();
-  //           }}
-  //         >
-  //           Edit
-  //         </button>
-  //       </div>
-  //     </div>
-  //   );
-  // };
 
   render() {
     let hasil_review = this.state.smsMax.map(itm => (
       <td key={itm}> {itm.target_wisuda}</td>
     ));
-    // let tombol = () => {
-    //   return (
-    //     <div>
-    //       <button onClick={this.addInput}>Add</button>
-    //       {/* <button onClick={this.editInput}>Edit</button> */}
-    //     </div>
-    //   );
-    // };
+
     return (
       <div className="p-grid">
         <div className="p-col-12">
@@ -270,17 +173,14 @@ export class PrediksiMahasiswa extends Component {
                 />
               </div>
               <div className="p-col-12 p-md-6 form-group">
-                <button
+                <Button
+                  label="Save"
                   onClick={() => {
                     this.save();
                   }}
-                >
-                  save
-                </button>
+                />
               </div>
             </div>
-            {/* {this.addInput}
-            {this.editInput} */}
           </div>
 
           {/* Tabel Hasil */}

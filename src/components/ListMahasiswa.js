@@ -55,7 +55,7 @@ export class ListMahasiswa extends Component {
     return (
       <div>
         <Link to={{ pathname: url2, state: { nim2: nim2 } }}>
-          <button className="btn btn-warning">Detail</button>
+          <Button label="Detail" />
         </Link>
       </div>
     );
@@ -65,7 +65,13 @@ export class ListMahasiswa extends Component {
     return (
       <div>
         <a className="btn btn-warning">
-          <Link to={url1}>Edit</Link>
+          <Link to={url1}>
+            <Button
+              label="Edit"
+              icon="pi pi-pencil"
+              className="p-button-warning"
+            />
+          </Link>
         </a>
       </div>
     );
@@ -80,18 +86,26 @@ export class ListMahasiswa extends Component {
   buttonAppDel = data => {
     return (
       <div>
-        <a className="btn btn-danger" onClick={() => this.deleteData(data)}>
+        {/* <a className="btn btn-danger" onClick={() => this.deleteData(data)}>
           Delete
-        </a>
+        </a> */}
+        <Button
+          label="Delete"
+          icon="pi pi-pencil"
+          className="p-button-danger"
+          onClick={() => this.deleteData(data)}
+        />
       </div>
     );
   };
 
   render() {
-    let footer = (
+    let AddData = (
       <div className="p-clearfix" style={{ width: "100%" }}>
         <a style={{ float: "left" }} className="edit-btn">
-          <Link to="/AddMahasiswa">Add</Link>
+          <Link to="/AddMahasiswa">
+            <Button label="Add" icon="pi pi-pencil" />
+          </Link>
         </a>
       </div>
     );
@@ -99,13 +113,12 @@ export class ListMahasiswa extends Component {
       <div className="p-grid">
         <div className="p-col-12">
           <div className="card card-w-title">
-            <h1>DataTable</h1>
+            <h1>Data Mahasiswa</h1>
             <DataTable
               value={this.state.dataTableValue}
               paginatorPosition="both"
               selectionMode="single"
-              footer={footer}
-              header="List of Studens Registered"
+              header={AddData}
               paginator={true}
               rows={10}
               responsive={true}

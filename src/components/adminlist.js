@@ -7,6 +7,7 @@ import { DataTable } from "primereact/datatable";
 // import { Button } from "react-bootstrap";
 
 import { DataView, DataViewLayoutOptions } from "primereact/dataview";
+import { Button } from "primereact/button";
 
 export class ListAdmin extends Component {
   constructor() {
@@ -24,17 +25,11 @@ export class ListAdmin extends Component {
   }
 
   render() {
-    let footer = (
-      <div className="p-clearfix" style={{ width: "100%" }}>
-        {/* <ButtonToolbar> */}
-        <button
-          variant="primary"
-          style={{ float: "left" }}
-          className="pi pi-plus btn btn-primary"
-        >
-          <Link to="/AddMahasiswa">Add</Link>
-        </button>
-        {/* </ButtonToolbar> */}
+    let AddData = (
+      <div style={{ width: "15%", marginBottom: "10px" }}>
+        <Link to="/AddMahasiswa">
+          <Button label="Add" icon="pi pi-pencil" />
+        </Link>
       </div>
     );
     return (
@@ -42,12 +37,11 @@ export class ListAdmin extends Component {
         <div className="p-col-12">
           <div className="card card-w-title">
             <h1>List Admin</h1>
+            {AddData}
             <DataTable
               value={this.state.dataTable}
               paginatorPosition="both"
               selectionMode="single"
-              header="List of Admin Registered"
-              footer={footer}
               paginator={true}
               rows={10}
               responsive={true}

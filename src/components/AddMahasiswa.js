@@ -82,23 +82,6 @@ export class AddMahasiswa extends Component {
       });
   }
 
-  test() {
-    console.log(this.state.nim);
-    console.log(this.state.nama);
-    console.log(this.state.radioValue);
-    console.log(this.state.tempat_lahir);
-    console.log(this.state.tanggal_lahir);
-    console.log(this.state.asal_sekolah);
-    console.log(this.state.nilai_UN);
-    console.log(this.state.tahun_lulus);
-    console.log(this.state.tahun_masuk_kuliah);
-    console.log(this.state.no_hp);
-    console.log(this.state.pekerjaan_orangtua);
-    console.log(this.state.jurusan_sekolah);
-    console.log(this.state.id_prodi);
-    console.log(this.state.prodi);
-  }
-
   render() {
     // const prodiSelectItems =
     // [
@@ -262,12 +245,6 @@ export class AddMahasiswa extends Component {
                 />
               </div>
               <div className="p-col-12 p-md-6">
-                {/* <Dropdown
-                  options={prodiSelectItems}
-                  placeholder="Prodi"
-                  value={this.state.id_prodi}
-                  onChange={e => this.setState({ id_prodi: e.value })}
-                /> */}
                 <select
                   value={this.state.id_prodi}
                   onChange={e =>
@@ -277,6 +254,12 @@ export class AddMahasiswa extends Component {
                         e.target.value === "" ? "select prodi" : ""
                     })
                   }
+                  style={{
+                    width: "100%",
+                    padding: "5px",
+                    borderRadius: "5px",
+                    height: "35px"
+                  }}
                 >
                   {this.state.prodi.map((item, ind) => (
                     <option key={ind} value={item.id}>

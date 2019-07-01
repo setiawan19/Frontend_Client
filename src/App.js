@@ -22,6 +22,11 @@ import { ListPrediksi } from "./components/list_prediksi";
 import { PrediksiMahasiswa } from "./components/prediksi_mahasiswa";
 import { ListAdmin } from "./components/adminlist";
 import { Detail_Mahasiswa } from "./components/Detail_Mahasiswa";
+import { AddFK } from "./components/AddFK";
+import { AddPR } from "./components/AddPR";
+import { EditFK } from "./components/EditFK";
+import { EditPR } from "./components/EditPR";
+import { AddPrediksi } from "./components/AddPrediksi";
 
 class App extends Component {
   constructor() {
@@ -208,6 +213,11 @@ class App extends Component {
           <Route path="/PrediksiMahasiswa/:nim" component={PrediksiMahasiswa} />
           <Route path="/adminlist" component={ListAdmin} />
           <Route path="/Detail_Mahasiswa/:nim" component={Detail_Mahasiswa} />
+          <Route path="/EditFK/:id" component={EditFK} />
+          <Route path="/AddFK" component={AddFK} />
+          <Route path="/EditPR/:id" component={EditPR} />
+          <Route path="/AddPR" component={AddPR} />
+          <Route path="/AddPrediksi" component={AddPrediksi} />
         </div>
 
         {/* <AppFooter /> */}
