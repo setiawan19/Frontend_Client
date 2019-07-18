@@ -36,7 +36,7 @@ export class AddMahasiswa extends Component {
       email: null,
       pekerjaan_orangtua: null,
       jurusan_sekolah: null,
-      id_prodi: "",
+      id_prodi: 1,
       nama_prodi: null,
       idprodi: null,
       prodi: []
@@ -251,7 +251,7 @@ export class AddMahasiswa extends Component {
                     this.setState({
                       id_prodi: e.target.value,
                       validationError:
-                        e.target.value === "" ? "select prodi" : ""
+                        e.target.value == "" ? "select prodi" : ""
                     })
                   }
                   style={{

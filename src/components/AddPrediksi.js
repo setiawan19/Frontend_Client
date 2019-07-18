@@ -49,6 +49,8 @@ export class AddPrediksi extends Component {
           mahasiswa: getdata.data
         });
       });
+
+      // this.setState({ nim: this.mahasiswa[0].nim });
     });
   }
   //   componentWillMount() {
@@ -74,15 +76,24 @@ export class AddPrediksi extends Component {
     // Get Target Wisuda
     var TargetWisuda = SisaSks / 24;
     var PrediksiWisuda = "";
+    var statusAktif = "";
+    var stats_MHS = Math.floor(TargetWisuda) + 2 + this.state.semester;
+
+    console.log("ini total hitung status : ", stats_MHS);
+    if (stats_MHS <= 8) {
+      var PrediksiWisuda = "Lulus Tepat Waktu";
+    } else {
+      var PrediksiWisuda = "Lulus Tidak Tepat Waktu";
+    }
 
     if (SisaSks <= 0) {
-      var PrediksiWisuda = "Selamat Anda Lulus";
-      console.log(PrediksiWisuda);
+      var statusAktif = "Tidak Aktif";
+      console.log(statusAktif);
     } else {
-      var PrediksiWisuda =
-        "Target Wisuda " + (Math.floor(TargetWisuda) + 1) + " Semester lagi";
-      console.log(PrediksiWisuda);
+      var statusAktif = "Aktif";
+      console.log(statusAktif);
     }
+
     // this.setState({ target_wisuda: PrediksiWisuda });
 
     var url = `http://localhost:3210/view_sks/add/` + this.state.nim;
@@ -95,7 +106,8 @@ export class AddPrediksi extends Component {
         semester: this.state.semester,
         tahun: years,
         sisa_sks: SisaSks,
-        target_wisuda: PrediksiWisuda
+        target_wisuda: PrediksiWisuda,
+        status_mhs: statusAktif
       })
       .then(function(response) {
         console.log(response);
@@ -112,6 +124,8 @@ export class AddPrediksi extends Component {
   }
 
   render() {
+    var a = this.state.mahasiswa[0];
+    console.log(a);
     return (
       <div className="p-grid">
         <div className="p-col-6">
@@ -145,7 +159,7 @@ export class AddPrediksi extends Component {
                 </select>
               </div>
               <div className="p-col-12 p-md-3" />
-              <div className="p-col-12 p-md-2">
+              {/* <div className="p-col-12 p-md-2">
                 <label>Prodi : </label>
               </div>
               <div className="p-col-12 p-md-7 form-group">
@@ -172,7 +186,7 @@ export class AddPrediksi extends Component {
                   ))}
                 </select>
               </div>
-              <div className="p-col-12 p-md-3" />
+              <div className="p-col-12 p-md-3" /> */}
 
               <div className="p-col-12 p-md-2 form-group">
                 <label>SKS Lulus : </label>

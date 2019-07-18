@@ -15,6 +15,7 @@ import "fullcalendar/dist/fullcalendar.css";
 import "./layout/layout.css";
 import "./App.css";
 import { ListMahasiswa } from "./components/ListMahasiswa";
+import { DataTraining } from "./components/DataTraining";
 import { AddMahasiswa } from "./components/AddMahasiswa";
 import { EditMahasiswa } from "./components/EditMahasiswa";
 import { ListFK_PR } from "./components/ListFK_PR";
@@ -126,6 +127,11 @@ class App extends Component {
         label: "Prediksi Kelulusan",
         icon: "pi pi-fw pi-chart-bar",
         to: "/ListPrediksi"
+      },
+      {
+        label: "Data Training",
+        icon: "pi pi-fw pi-chart-bar",
+        to: "/DataTraining"
       }
     ];
   }
@@ -218,6 +224,7 @@ class App extends Component {
           <Route path="/EditPR/:id" component={EditPR} />
           <Route path="/AddPR" component={AddPR} />
           <Route path="/AddPrediksi" component={AddPrediksi} />
+          <Route path="/DataTraining" component={DataTraining} />
         </div>
 
         {/* <AppFooter /> */}

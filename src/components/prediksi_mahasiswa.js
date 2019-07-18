@@ -33,6 +33,7 @@ export class PrediksiMahasiswa extends Component {
       sisa_sks: null,
       total_sks: 0,
       target_wisuda: "",
+      status_mhs: "",
       semesterMax: null
     };
   }
@@ -54,6 +55,28 @@ export class PrediksiMahasiswa extends Component {
       });
     });
   }
+  deleteData = data => {
+    if (window.confirm("Delete this ?")) {
+      axios.delete(`http://localhost:3210/prediksi/${data.id}`).then(() => {
+        window.location.reload();
+      });
+    }
+  };
+  buttonAppDel = data => {
+    return (
+      <div>
+        {/* <a className="btn btn-danger" onClick={() => this.deleteData(data)}>
+          Delete
+        </a> */}
+        <Button
+          // label="Delete"
+          icon="pi pi-pencil"
+          className="p-button-danger"
+          onClick={() => this.deleteData(data)}
+        />
+      </div>
+    );
+  };
   save() {
     // Get Year
     var newYear = new Date();
@@ -90,18 +113,28 @@ export class PrediksiMahasiswa extends Component {
     if (SisaSks < 0) {
       SisaSks = 0;
     }
+
     // Get Target Wisuda
     var TargetWisuda = SisaSks / 24;
     var PrediksiWisuda = "";
+    var statusAktif = "";
+    var stats_MHS = Math.floor(TargetWisuda) + 2 + this.state.semester;
+
+    console.log("ini total hitung status : ", stats_MHS);
+    if (stats_MHS <= 8) {
+      var PrediksiWisuda = "Lulus Tepat Waktu";
+    } else {
+      var PrediksiWisuda = "Lulus Tidak Tepat Waktu";
+    }
 
     if (SisaSks <= 0) {
-      var PrediksiWisuda = "Selamat Anda Lulus";
-      console.log(PrediksiWisuda);
+      var statusAktif = "Tidak Aktif";
+      console.log(statusAktif);
     } else {
-      var PrediksiWisuda =
-        "Target Wisuda " + (Math.floor(TargetWisuda) + 1) + " Semester lagi";
-      console.log(PrediksiWisuda);
+      var statusAktif = "Aktif";
+      console.log(statusAktif);
     }
+
     // this.setState({ target_wisuda: PrediksiWisuda });
 
     var nimDetails = this.props.location.state.nim1;
@@ -115,7 +148,8 @@ export class PrediksiMahasiswa extends Component {
         semester: this.state.semester,
         tahun: years,
         sisa_sks: SisaSks,
-        target_wisuda: PrediksiWisuda
+        target_wisuda: PrediksiWisuda,
+        status_mhs: statusAktif
       })
       .then(function(response) {
         console.log(response);
@@ -204,15 +238,18 @@ export class PrediksiMahasiswa extends Component {
               <Column field="sks_lulus" header="SKS Lulus" sortable={true} />
               <Column field="ips" header="IPS" sortable={true} />
               <Column field="ipk" header="IPK" sortable={true} />
-
               <Column field="semester" header="Semester" sortable={true} />
-              <Column field="tahun" header="Tahun" sortable={true} />
               <Column field="sisa_sks" header="Sisa SKS" sortable={true} />
               <Column field="total_sks" header="Total SKS" />
-              <Column field="target_wisuda" header="Target" sortable={true} />
               <Column field="prodi" header="Prodi" sortable={true} />
-              <Column field="fakultas" header="Fakultas" sortable={true} />
-              {/* <Column header="" body={this.tombol} /> */}
+              <Column field="tahun" header="Tahun" sortable={true} />
+              <Column field="target_wisuda" header="Status" sortable={true} />
+              <Column
+                field="status_mhs"
+                header="Status Mahasiswa"
+                sortable={true}
+              />
+              {/* <Column field="fakultas" header="Fakultas" sortable={true} /> */}
             </DataTable>
           </div>
           <div className="card card-w-title">
